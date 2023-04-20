@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app.views import SaveResultsView, LatestBuildView, CharDataView, GenericView, SummaryListView, BaseInfoView, \
+from app.views import SaveResultsView, LatestBuildView, CharDataView, SummaryListView, BaseInfoView, \
     SummaryDetailView
 
 urlpatterns = [
@@ -26,9 +26,4 @@ urlpatterns = [
     path('summary_list', SummaryListView.as_view(), name='概括列表'),
     path('case_detail/<int:pk>', SummaryDetailView.as_view(), name='用例信息'),
     path('base_info', BaseInfoView.as_view(), name='项目信息统计'),
-
-    path('book', GenericView.as_view(), name='书籍列表'),
-    path('book/<int:pk>', GenericView.as_view(), name='书籍'),
-
-    # path('upload', upload, name='upload'),
 ]

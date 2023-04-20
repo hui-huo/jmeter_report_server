@@ -5,19 +5,13 @@ Author:   Hui Huo.
 File:     exception.py
 Describe: 
 """
-from django.http import Http404
 from rest_framework import status
-from rest_framework.exceptions import APIException, PermissionDenied
-
-from rest_framework.views import exception_handler
+from rest_framework.exceptions import APIException
 
 from common.response import Response
 
 
 def custom_exception_handler(exc, context):
-    # 首先调用REST framework默认的异常处理，以获得标准的错误响应。
-    # res = exception_handler(exc, context)
-
     if isinstance(exc, APIException):
         code = exc.status_code
         msg = exc.default_detail

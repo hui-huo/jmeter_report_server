@@ -1,29 +1,12 @@
 # Create your views here.
-import os
-import tempfile
-
-from django.core import serializers
 from django.db.models import Q
-from django.forms import model_to_dict
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import views, status
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, \
-    DestroyModelMixin
-from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
-
-from common.filter import JSONFilterBackend
+from rest_framework import views
 from common.response import Response
 
-from app.models import TestSummary, TestCase, Book
-from app.serializer import TestSummarySerializer, TestCaseSerializer, ChartDataSerializer, BookModelSerializer, \
-    SaveReportSerializer, SummaryFilterSerializer, SummaryDetailSerializer, LatestBuildSerializer
-from common.exception import ChartTypeError
-from common.pagination import CommonPageNumberPagination
-from common.utils import generate_unique_id, transition_time
+from app.models import TestSummary, TestCase
+from app.serializer import TestSummarySerializer, TestCaseSerializer, SaveReportSerializer
+from app.validator import ChartDataSerializer, SummaryFilterSerializer, LatestBuildSerializer
+from common.utils import transition_time
 
 
 class SaveResultsView(views.APIView):
@@ -35,16 +18,6 @@ class SaveResultsView(views.APIView):
         serializer_data = SaveReportSerializer(data=request.data)
         if serializer_data.is_valid():
             serializer_data.save()
-            # batch_no = generate_unique_id()
-            # summary_data = serializer_data.validated_data.get('test_summary')
-            # cases_data = serializer_data.validated_data.get('test_cases')
-            #
-            # summary = TestSummary.objects.create(batch_no=batch_no, **summary_data)
-            # new_cases = [{'batch_no': batch_no, **cd} for cd in cases_data]
-            # case_models = [TestCase(**nc) for nc in new_cases]
-            # TestCase.objects.bulk_create(case_models)
-            #
-            # res = TestSummarySerializer(instance=summary).data
             return Response(data=serializer_data.data)
         else:
             return Response(data=serializer_data.errors)
@@ -77,7 +50,7 @@ class LatestBuildView(views.APIView):
 
 class CharDataView(views.APIView):
     """
-    图表数据
+    图表趋势数据
     """
 
     def post(self, request):
@@ -117,6 +90,9 @@ class CharDataView(views.APIView):
 
 
 class SummaryListView(views.APIView):
+    """
+    构建测试记录
+    """
 
     def post(self, request):
         req = SummaryFilterSerializer(data=request.data)
@@ -145,25 +121,14 @@ class SummaryListView(views.APIView):
 
             res_data = TestSummarySerializer(instance=query_result, many=True)
             return Response(data=res_data.data)
-
-            # {"pass_rate": "2312"}
-
-            # req.validated_data.get('result')
-            # if (result := req.validated_data.get('result')) is not None:
-            #     q = q & Q(result=result)
-            #
-            # pagination = CommonPageNumberPagination()
-            # pagination.page_size = req.validated_data.get('size')
-            # pagination.page = req.validated_data.get('page')
-            #
-            # paginate_queryset = pagination.paginate_queryset(summary_all.filter(q).order_by('-id'), request)
-            # res_data = TestSummarySerializer(instance=paginate_queryset, many=True)
-            # return pagination.get_paginated_response(res_data.data)
         else:
             return Response(data=req.errors)
 
 
 class SummaryDetailView(views.APIView):
+    """
+    测试详情
+    """
 
     def get(self, request, pk):
         summary_info = TestSummary.objects.get(pk=pk)
@@ -176,116 +141,12 @@ class SummaryDetailView(views.APIView):
 
 
 class BaseInfoView(views.APIView):
+    """
+    项目环境信息
+    """
 
     def get(self, request):
         project = TestSummary.objects.values_list('project', flat=True).distinct()
         env = TestSummary.objects.values_list('env', flat=True).distinct()
         data = {'project': project, 'env': env}
         return Response(data=data)
-
-
-# class SummaryListView(GenericAPIView):
-# queryset = TestSummary.objects
-# serializer_class = TestSummarySerializer
-# filter_backends = [JSONFilterBackend, OrderingFilter]
-# filterset_fields = ['name', 'isbn']
-# ordering_fields = ['id']
-#
-# pagination_class = CommonPageNumberPagination
-#
-# def post(self, requests):
-#     summary_list = self.get_serializer(instance=self.paginate_queryset(self.filter_queryset(self.get_queryset())),
-#                                        fields=('id', 'batch_no', 'project'),
-#                                        many=True)
-#     return summary_list
-
-class GenericView(GenericAPIView):
-    # lookup_field = 'name'         # 默认pk=id，get_object()关联此值
-    queryset = Book.objects
-    serializer_class = BookModelSerializer
-
-    # filter_backends = [SearchFilter]  # 内置过滤器，固定写法
-    # search_fields = ('name',)  # /api/v1/books?search=红，name或price中只要有红就会搜出来
-
-    filter_backends = [DjangoFilterBackend, OrderingFilter]  # 第三方过滤器
-    filterset_fields = ['name', 'isbn']
-    ordering_fields = ['id']
-
-    pagination_class = CommonPageNumberPagination
-
-    def get(self, request, pk=None):
-        if pk is None:
-            serializer = self.get_serializer(instance=self.paginate_queryset(self.filter_queryset(self.get_queryset())),
-                                             fields=('name', 'isbn'),
-                                             many=True)  # 必须套在原来的查询上分页和筛选信息
-            return self.get_paginated_response(serializer.data)
-        else:
-            serializer = self.get_serializer(instance=self.get_object())
-            return Response(serializer.data)
-
-    def post(self, request):
-        serializer_data = self.get_serializer(data=request.data)
-        if serializer_data.is_valid():
-            serializer_data.save()
-            return Response(serializer_data.data)
-        else:
-            return Response(msg=serializer_data.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request, pk):
-        serializer_data = self.get_serializer(data=request.data, instance=self.get_object())
-
-        if serializer_data.is_valid():
-            serializer_data.save()
-            return Response(serializer_data.data)
-        else:
-            return Response(serializer_data.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        obj = self.get_object()
-        obj.delete()
-        return Response({'msg': '删除成功'})
-
-# class BookView(GenericAPIView, ListModelMixin, CreateModelMixin):
-#     queryset = Book.objects
-#     serializer_class = BookModelSerializer
-#
-#     def get(self, request):
-#         return self.list(request)
-#
-#     def post(self, request):
-#         return self.create(request)
-#
-#
-# class BookDetailView(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
-#     queryset = Book.objects
-#     serializer_class = BookModelSerializer
-#
-#     def get(self, request, pk):
-#         return self.retrieve(request)
-#
-#     def put(self, request, pk):
-#         return self.update(request)
-#
-#     def delete(self, request, pk):
-#         return self.destroy(request)
-
-# @csrf_exempt
-# def upload(request):
-#     import xmind
-#     if request.method == 'POST':
-#         xmind_file = request.FILES.get('xmind')
-#         # 临时文件
-#         with tempfile.NamedTemporaryFile(suffix='.xmind', delete=False) as tmp:
-#             for chunk in xmind_file.chunks():
-#                 tmp.write(chunk)
-#             tmp_path = tmp.name
-#         # 读取文件
-#         workbook = xmind.load(tmp_path)
-#         # 删除文件
-#         os.unlink(tmp_path)
-#         # 数据获取
-#         if workbook.getData():
-#             case_len = len(workbook.getData()[0].get('topic').get('topics'))
-#             return JsonResponse({'case_count': case_len})
-#         return JsonResponse({'case_count': 0})
-#     return JsonResponse({'msg': 'upload.html'})

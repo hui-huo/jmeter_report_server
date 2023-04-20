@@ -9,12 +9,10 @@ Describe:
 import datetime
 import re
 
-from django.db.models import Q
 from django.forms import model_to_dict
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 
-from app.models import TestSummary, TestCase, Book
+from app.models import TestSummary, TestCase
 from common.utils import generate_unique_id
 
 
@@ -79,7 +77,6 @@ class TestCaseSerializer(serializers.ModelSerializer):
 
 class SaveReportSerializer(serializers.Serializer):
     test_summary = TestSummarySerializer()
-    # test_cases = TestCaseSerializer(many=True)
     test_cases = serializers.ListField(child=TestCaseSerializer(), write_only=True)
 
     def create(self, validated_data):
@@ -119,110 +116,3 @@ class SaveReportSerializer(serializers.Serializer):
         """
         data = model_to_dict(instance)
         return data
-
-
-class ChartDataSerializer(serializers.Serializer):
-    project = serializers.CharField(required=False)
-    env = serializers.CharField(required=False)
-    type = serializers.CharField()
-    start_time = serializers.CharField()
-    end_time = serializers.CharField()
-
-
-class LatestBuildSerializer(serializers.Serializer):
-    project = serializers.CharField(required=False)
-    env = serializers.CharField(required=False)
-
-
-class SummaryFilterSerializer(serializers.Serializer):
-    # page = serializers.IntegerField(default=1)
-    # size = serializers.IntegerField(default=100)
-    batch_no = serializers.CharField(required=False)
-    project = serializers.CharField(required=False)
-    env = serializers.CharField(required=False)
-    type = serializers.CharField(required=False)
-    pass_rate = serializers.CharField(required=False)
-    result = serializers.CharField(required=False)
-    start_time = serializers.CharField(required=False)
-    end_time = serializers.CharField(required=False)
-
-
-class SummaryDetailSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-
-
-class BookSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    isbn = serializers.CharField()
-
-    price = serializers.CharField(read_only=True)  # model中设置 有效
-
-    def update(self, instance, validated_data):
-        """
-            更新操作，在save方法调用时 如果序列化对象有instance时调用
-        """
-        print(f'update...{validated_data}')
-        instance.name = validated_data.get('name')
-        instance.isbn = validated_data.get('isbn')
-        instance.save()
-        return instance
-
-    def create(self, validated_data):
-        """
-            更新操作，在save方法调用时 如果序列化对象只有data时调用
-        """
-        print(f'create...{validated_data}')
-        return Book.objects.create(**validated_data)
-
-    def to_representation(self, instance):
-        """
-            修改序列化的数据，在第一次调用.data时调用
-        """
-        data = super().to_representation(instance)
-        data['name'] = 'Python从入门到精通'
-        return data
-
-    def to_internal_value(self, data):
-        """
-            修改反序列化的数据，在调用is_valid()时自动调用
-        """
-        data['name'] = 'PHP从入门到精通'
-        return super().to_internal_value(data)
-
-
-class BookModelSerializer(DynamicFieldsModelSerializer):
-    # price = serializers.CharField(read_only=True) # model中设置 无效
-    # price = serializers.SerializerMethodField(read_only=True)  # 设置同样 无效
-    # 以上两种 没有属性覆盖自动生成重写一说，只能是别名如 new_price
-    #
-    # def get_price(self, obj):
-    #     return 100
-
-    new_price = serializers.SerializerMethodField()  # 只能在序列化时使用，且不会对反序列化数据校验这一项, read_only的参数都不校验
-
-    def get_new_price(self, obj):
-        return 'new_100'
-
-    # def validate(self, attrs):
-    #     price = attrs.get('isbn')
-    #     if isinstance(price, int):
-    #         raise ValidationError('isbn必须为str类型.')
-    #     else:
-    #         return attrs
-
-    class Meta:
-        model = Book
-        fields = '__all__'
-        extra_kwargs = {
-            'isbn': {'required': False},
-            'price': {'read_only': True}  # 这种方式有效，结合到model中的property属性
-        }
-
-    # def to_internal_value(self, data):
-    #     data['name'] = '红楼梦'
-    #     return super().to_internal_value(data)
-
-    # def to_representation(self, instance):
-    #     data = super().to_representation(instance)
-    #     data['name'] = '水浒传'
-    #     return data

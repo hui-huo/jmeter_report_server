@@ -28,6 +28,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +39,6 @@ INSTALLED_APPS = [
     'django.db.backends',  # 添加日志
     'django_filters',  # 添加过滤
     'corsheaders',  # 跨域
-
     'rest_framework',
     'app.apps.AppConfig',
 
@@ -85,13 +85,13 @@ WSGI_APPLICATION = 'jmeter_report_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
-        'HOST': '127.0.0.1',
-        'USER': 'test',
-        'PASSWORD': '123456',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'test',
+        # 'HOST': '127.0.0.1',
+        # 'USER': 'test',
+        # 'PASSWORD': '123456',
     }
 }
 
@@ -154,18 +154,18 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'common.exception.custom_exception_handler'
 }
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }

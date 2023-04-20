@@ -15,8 +15,8 @@ class TestSummary(models.Model):
     pass_rate = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="通过率")
     duration = models.IntegerField(verbose_name="持续时间")
     result = models.BooleanField(verbose_name="测试结果")
-    start_time = models.BigIntegerField(max_length=50, verbose_name="开始时间")
-    end_time = models.BigIntegerField(max_length=50, verbose_name="结束时间")
+    start_time = models.BigIntegerField(verbose_name="开始时间")
+    end_time = models.BigIntegerField(verbose_name="结束时间")
 
     class Meta:
         verbose_name = '测试概括'
@@ -49,15 +49,3 @@ class TestCase(models.Model):
 
     def __str__(self):
         return self.case_name
-
-
-class Book(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50, verbose_name="图书名称", help_text="图书名称")
-    isbn = models.CharField(max_length=50, help_text="图书编号")
-    created_time = models.DateTimeField(auto_now_add=True)
-    updated_time = models.DateTimeField(auto_now=True)
-
-    @property
-    def price(self):
-        return 100
