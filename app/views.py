@@ -111,7 +111,7 @@ class CharDataView(views.APIView):
                     data_list.append(
                         {'id': record.id, 'batch_no': record.batch_no, 'pass_rate': record.pass_rate})
                 return Response(data=data_list)
-            return data_list
+            return Response(data=data_list)
         else:
             return Response(data=req.errors)
 
