@@ -12,8 +12,7 @@ RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ --trusted-host mirr
 RUN #pip install --no-cache-dir -r requirements.txt
 
 # 运行 migrate 命令
-RUN python manage.py makemigrations app
-RUN python manage.py migrate app
+RUN python manage.py makemigrations app && python manage.py migrate app
 
 # 启动应用
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
