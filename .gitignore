@@ -213,3 +213,5 @@ cython_debug/
 
 .idea/
 
+migrations/
+
