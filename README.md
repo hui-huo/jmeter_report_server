@@ -43,7 +43,8 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 
 ## 交流群
 二维码会经常过期，可以加我个人微信: `_huihuo`，拉你入群。
-![挥霍。](./img.png)
+
+<img src="./img.png" alt="_huihuo" width="300" height="300" />
 
 
 
