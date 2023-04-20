@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('app.urls')),
     path('', TemplateView.as_view(template_name='index.html')),
-    path('dashboard/', TemplateView.as_view(template_name='dashboard/index.html')),
-    path('report/', TemplateView.as_view(template_name='report/index.html')),
+    path('dashboard', TemplateView.as_view(template_name='dashboard/index.html')),
+    path('report', TemplateView.as_view(template_name='report/index.html')),
     path('detail/<int:id>', TemplateView.as_view(template_name='detail/:id/index.html')),
 ]
