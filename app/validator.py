@@ -3,7 +3,7 @@
 Time:     2023/4/20 17:15
 Author:   Hui Huo.
 File:     validator.py
-Describe: 
+Describe: request 参数校验
 """
 from rest_framework import serializers
 

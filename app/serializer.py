@@ -1,9 +1,9 @@
 # _*_ coding: utf-8 _*_
 """
-Time:     2023/3/31 11:33
+Time:     2023/4/10 11:33
 Author:   Hui Huo.
 File:     serializer.py
-Describe: 
+Describe: 序列化
 """
 
 import datetime
@@ -80,10 +80,6 @@ class SaveReportSerializer(serializers.Serializer):
     test_cases = serializers.ListField(child=TestCaseSerializer(), write_only=True)
 
     def create(self, validated_data):
-        """
-            create 方法返回instance中必须包含序列化定义的字段，可以使用write_only排除
-        """
-
         def parse_request_data(data):
             pattern = re.compile(r'POST data:\s*(\{.*\}|.*)')
             match = pattern.search(data)
@@ -109,10 +105,6 @@ class SaveReportSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         pass
 
-    # 这个重写应该也可以解决自定义instance，但是走不了嵌套子类的序列化了，比如这里的summary 时间格式化没有生效
     def to_representation(self, instance):
-        """
-            修改序列化的数据，在第一次调用.data时调用
-        """
         data = model_to_dict(instance)
         return data
