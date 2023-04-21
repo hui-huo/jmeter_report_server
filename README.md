@@ -15,6 +15,10 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 
 虽然功能比较简单，但已满足基本日常需求。
 
+## 👏 前置
+### 安装JMeter插件
+此插件用于测试数据的收集：[JMeter-Backend-Listener](https://github.com/hui-huo/JMeter-Backend-Listener)
+
 ## 📌 安装
 
 ### 一、Docker
@@ -29,9 +33,6 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 3. 生成数据表：`python manage.py makemigrations app`
 4. 创建数据表：`python manage.py migrate app`
 5. 启动服务：`python manage.py runserver`
-
-## 👏 JMeter
-插件使用(测试数据收集)：[JMeter-Backend-Listener](https://github.com/hui-huo/JMeter-Backend-Listener)
 
 ## 🔎 预览
 
