@@ -36,15 +36,15 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 ## 🔎 预览
 
 #### 测试看板
-![image-20230420234719980](https://s2.loli.net/2023/04/20/BQSIvhOVRnNa97G.png)
+![report](https://files.mdnice.com/user/25329/5919ebec-6bda-4717-a308-52a2428d1154.png)
 
 #### 测试详情
-![image-20230420234811354](https://s2.loli.net/2023/04/20/XjcgTUqElfRi4rs.png)
+![detail](https://files.mdnice.com/user/25329/5f6b4198-d6c0-40a9-8111-1666448b2d5a.png)
 
 ## 交流群
 二维码会经常过期，可以加我个人微信: `xuechaoluan`，拉你入群。
 
-<img src="https://s2.loli.net/2023/04/21/6QwORHZeaoD3ClG.png" alt="_huihuo" width="300" height="300" />
+<img src="https://files.mdnice.com/user/25329/b940a9df-f86a-40f9-ba15-f79fba7585b6.png" alt="_huihuo" width="300" height="300" />
 
 
 
