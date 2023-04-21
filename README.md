@@ -31,7 +31,7 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 
 HOST和PORT可选，默认`localhost`, `3306`
 ```
-docker run --rm -d -p 8000:8000 \
+docker run -d -p 8000:8000 \
 -e DB_NAME=数据库名称 \
 -e DB_USER=用户名 \
 -e DB_PASSWORD=密码 \
