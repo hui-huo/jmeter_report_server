@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'jmeter_report_server.wsgi.application'
 if 'DB_NAME' in os.environ:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.mysql',
             'NAME': os.environ.get('DB_NAME'),
             'USER': os.environ.get('USER'),
             'PASSWORD': os.environ.get('PASSWORD'),
