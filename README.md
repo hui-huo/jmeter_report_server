@@ -43,7 +43,7 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 ![detail](https://files.mdnice.com/user/25329/5f6b4198-d6c0-40a9-8111-1666448b2d5a.png)
 
 ## 交流群
-二维码会经常过期，可以加我个人微信: `xuechaoluan`，拉你入群。
+二维码会经常过期，可以加我个人微信: `_huihuo`，拉你入群。
 
 <img src="https://files.mdnice.com/user/25329/b940a9df-f86a-40f9-ba15-f79fba7585b6.png" alt="_huihuo" width="300" height="300" />
 
