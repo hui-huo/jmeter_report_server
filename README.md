@@ -17,7 +17,7 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 
 ## 👏 前置
 ### 安装JMeter插件
-此插件用于测试数据的收集：[JMeter-Backend-Listener](https://github.com/hui-huo/JMeter-Backend-Listener)
+后端监听器，用于测试数据的收集：[JMeter-Backend-Listener](https://github.com/hui-huo/JMeter-Backend-Listener)
 
 ## 📌 安装
 
