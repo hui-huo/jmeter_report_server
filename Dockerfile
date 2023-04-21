@@ -24,8 +24,7 @@ RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ --trusted-host mirr
 
 # 运行 migrate 命令
 #RUN python manage.py makemigrations app && python manage.py migrate app
-CMD ["python", "manage.py", "makemigrations", "app"]
-CMD ["python", "manage.py", "migrate", "app"]
 
 # 启动应用
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py makemigrations app && python manage.py migrate app && python manage.py runserver 0.0.0.0:8000"]
