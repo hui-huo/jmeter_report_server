@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from app.views import SaveResultsView, LatestBuildView, CharDataView, SummaryListView, BaseInfoView, \
-    SummaryDetailView
+    SummaryDetailView, TestView
 
 urlpatterns = [
     path('save_results', SaveResultsView.as_view(), name='保存报告'),
@@ -26,4 +26,6 @@ urlpatterns = [
     path('summary_list', SummaryListView.as_view(), name='概括列表'),
     path('case_detail/<int:pk>', SummaryDetailView.as_view(), name='用例信息'),
     path('base_info', BaseInfoView.as_view(), name='项目信息统计'),
+
+    path('test', TestView.as_view(), name='项目信息统计'),
 ]

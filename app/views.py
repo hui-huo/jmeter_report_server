@@ -150,3 +150,15 @@ class BaseInfoView(views.APIView):
         env = TestSummary.objects.values_list('env', flat=True).distinct()
         data = {'project': project, 'env': env}
         return Response(data=data)
+
+
+class TestView(views.APIView):
+    """
+    测试接口
+    """
+
+    def get(self, reqeust):
+        return Response(data=reqeust.query_params)
+
+    def post(self, reqeust):
+        return Response(data=reqeust.data)
