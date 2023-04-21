@@ -25,6 +25,7 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 
 1. `docker pull huihuo21/jmeter-report`
 2. `docker run -d -p 8000:8000 huihuo21/jmeter-report`
+3. 浏览器访问`http://{服务ip}:8000`
 
 默认启动使用内置`sqlite`，指定数据库(仅支持`mysql`)则需要传入参数
 
@@ -38,7 +39,6 @@ docker run --rm -d -p 8000:8000 \
 -e DB_PORT=端口 \
 huihuo21/jmeter-report
 ```
-3. 浏览器访问`http://{服务ip}:8000`
 
 ### 二、本地构建
 1. 克隆代码：`git clone https://github.com/hui-huo/jmeter_report_server.git`
