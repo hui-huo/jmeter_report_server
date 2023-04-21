@@ -88,10 +88,10 @@ if 'DB_NAME' in os.environ:
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('USER'),
-            'PASSWORD': os.environ.get('PASSWORD'),
-            'HOST': os.environ.get('HOST', 'localhost'),
-            'PORT': os.environ.get('PORT', '3306'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST', 'localhost'),
+            'PORT': os.environ.get('DB_PORT', '3306'),
         }
     }
 else:
