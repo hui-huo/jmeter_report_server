@@ -53,7 +53,7 @@ huihuo21/jmeter-report
 ![report](https://files.mdnice.com/user/25329/5919ebec-6bda-4717-a308-52a2428d1154.png)
 
 #### 测试详情
-![detail](https://files.mdnice.com/user/25329/5f6b4198-d6c0-40a9-8111-1666448b2d5a.png)
+![detail](https://files.mdnice.com/user/25329/7eee778e-9daa-42ab-81ea-137ced272f6b.png)
 
 ## 交流群
 二维码会经常过期，可以加我个人微信: `_huihuo`，拉你入群。
