@@ -31,7 +31,7 @@ class TestCase(models.Model):
     batch_no = models.CharField(max_length=50, verbose_name="批次编号")
     module_name = models.CharField(max_length=50, verbose_name="模块名称")
     case_name = models.CharField(max_length=50, verbose_name="用例名称")
-    request_url = models.CharField(max_length=50, verbose_name="请求地址")
+    request_url = models.CharField(max_length=300, verbose_name="请求地址")
     request_method = models.TextField(blank=True, null=True, verbose_name="请求方法")
     request_header = models.TextField(blank=True, null=True, verbose_name="请求头")
     request_body = models.TextField(blank=True, null=True, verbose_name="请求体")

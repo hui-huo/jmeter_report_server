@@ -81,7 +81,7 @@ class SaveReportSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         def parse_request_data(data):
-            pattern = re.compile(r'POST data:\s*(\{.*\}|.*)')
+            pattern = re.compile(r'POST data:\s*(\{[\s\S]*\}|.*)')
             match = pattern.search(data)
 
             # 如果找到匹配项，则输出POST数据
