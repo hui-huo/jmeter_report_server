@@ -14,7 +14,7 @@ JMeter是测试工作中常用的一款工具，除了压测还可以用来做�
 
 虽然功能比较简单，但已满足基本日常需求。
 
-## 实现原理
+## 实现
 
 <img src="https://files.mdnice.com/user/25329/fbc0a1ff-4f0b-4915-915e-cd33104cd96a.png" alt="实现原理" width="800" height="500" />
 
