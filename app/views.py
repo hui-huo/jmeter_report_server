@@ -132,7 +132,7 @@ class SummaryDetailView(views.APIView):
 
     def get(self, request, pk):
         summary_info = TestSummary.objects.get(pk=pk)
-        cases_info = TestCase.objects.filter(batch_no=summary_info.batch_no).order_by('-id')
+        cases_info = TestCase.objects.filter(batch_no=summary_info.batch_no)
 
         summary_serializer = TestSummarySerializer(instance=summary_info).data
         cases_serializer = TestCaseSerializer(instance=cases_info, many=True).data
