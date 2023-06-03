@@ -91,9 +91,13 @@ class SaveReportSerializer(serializers.Serializer):
 
             return data
 
-        summary_data = validated_data.get('test_summary')
-        cases_data = validated_data.get('test_cases')
+        summary_data: dict = validated_data.get('test_summary')
+        cases_data: list = validated_data.get('test_cases')
         batch_no = generate_unique_id()
+
+        scenario_list = {cd.get('scenario_name') for cd in cases_data}
+        scenario_count = len(scenario_list)
+        summary_data.update({'scenario': scenario_count})
 
         summary = TestSummary.objects.create(batch_no=batch_no, **summary_data)
         new_cases = [{'batch_no': batch_no, **cd, 'request_body': parse_request_data(cd.get('request_body'))} for cd in

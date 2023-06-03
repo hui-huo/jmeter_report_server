@@ -1,5 +1,6 @@
 # Create your views here.
 from django.db.models import Q
+from django.utils import timezone
 from rest_framework import views
 from common.response import Response
 
@@ -33,6 +34,7 @@ class LatestBuildView(views.APIView):
 
         if req.is_valid():
             q = Q()
+            q = q & Q(is_deleted=False)
             summary_all = TestSummary.objects
             if project := req.validated_data.get('project'):
                 q = q & Q(project__contains=project)
@@ -57,6 +59,7 @@ class CharDataView(views.APIView):
         req = ChartDataSerializer(data=request.data)
         if req.is_valid():
             q = Q()
+            q = q & Q(is_deleted=False)
             summary_all = TestSummary.objects
 
             if project := req.validated_data.get('project'):
@@ -98,6 +101,7 @@ class SummaryListView(views.APIView):
         req = SummaryFilterSerializer(data=request.data)
         if req.is_valid():
             q = Q()
+            q = q & Q(is_deleted=False)
             summary_all = TestSummary.objects.all()
 
             if project := req.validated_data.get('project'):
@@ -150,6 +154,17 @@ class BaseInfoView(views.APIView):
         env = TestSummary.objects.values_list('env', flat=True).distinct()
         data = {'project': project, 'env': env}
         return Response(data=data)
+
+
+class DeleteSummary(views.APIView):
+    def post(self, request):
+        summary = TestSummary.objects.filter(pk=request.data.get("id"))
+        if summary:
+            summary.update(is_deleted=True, last_updated=timezone.now())
+            summary_serializer = TestSummarySerializer(instance=summary, many=True).data
+            return Response(data=summary_serializer)
+        else:
+            return Response(data=f"record not exist: {request.data.get('id')}")
 
 
 class TestView(views.APIView):
