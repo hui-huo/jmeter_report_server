@@ -43,7 +43,7 @@ huihuo21/jmeter-report
 ```
 
 ### 二、本地构建
-
+基于python3.9以上版本
 1. 克隆代码：`git clone https://github.com/hui-huo/jmeter_report_server.git`
 2. 安装依赖：`pip install -r requirements.txt `
 3. 生成数据表：`python manage.py makemigrations app`
