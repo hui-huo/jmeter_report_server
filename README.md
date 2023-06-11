@@ -100,6 +100,15 @@ JMeter 版本`5.4.3`，JKD-11 (JDK8 应该可用，未测试)
 
 接口测试一般分为两种：一种是单接口测试，如对同一个接口做正向或者异常的传参，通常这种接口测试之间没有相互依赖关系，其中一个测试失败不影响另一个测试的执行；另一种则是串联场景的接口测试，通常是组织多个接口来测试某个场景，接口之间存在关联关系，如某个接口的入参依赖前一个接口的出参。为了方便，此报告会将每一个 http 请求视为一个用例，场景数只做统计展示。
 
+
+#### 插件工具分享
+第一个：
+[BlazeMeter | The Continuous Testing Platform](https://chrome.google.com/webstore/detail/blazemeter-the-continuous/mbopgmdnpcbohhpnfglgohlbhfongabi)
+这个chrome插件用来快速录制接口生成可执行的JMX文件。
+
+第二个：[Convert HAR, XML, Selenium, PCAP and JSON to JMX format](https://converter.blazemeter.com/)。
+
+
 ## 🏄 交流群
 
 二维码会经常过期，可以加我个人微信: `_huihuo`，拉你入群。
