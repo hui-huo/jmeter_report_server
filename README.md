@@ -11,8 +11,7 @@ JMeter 是测试工作中常用的一款工具，除了压测还可以用来做�
 
 前端 React + Antd | 后端 Django REST framework | Python 3.8+
 
-<img src="https://files.mdnice.com/user/25329/8ff683b1-4e1f-4a52-b131-24b8564d6d57.png" alt="_huihuo" width="500" height="350" />
-
+<img src="https://files.mdnice.com/user/25329/8ff683b1-4e1f-4a52-b131-24b8564d6d57.png" alt="_huihuo" width="600" height="450" />
 
 ## 📌 安装配置
 
@@ -80,12 +79,13 @@ JMeter 版本`5.4.3`，JKD-11 (JDK8 应该可用，未测试)
 
 ### 单接口测试
 
-![](https://files.mdnice.com/user/25329/0a6f9ef8-72bb-4b68-a880-2dccbf3cbb98.png)
+![](https://files.mdnice.com/user/25329/82c0c03f-0b58-4e90-b719-f57c31bee378.png)
+
 对于单接口测试的用例组织形式如上图所示：线程组名称=所属模块名称，事务控制器名称=场景名称，请求名=用例名；请求使用事务控制器包裹，事务控制器必须勾选`Generate parent sample`选项。（事务控制器非必须）
 
 ### 串联接口测试
 
-![](https://files.mdnice.com/user/25329/29cfc286-72b6-4d69-a74f-fb1c2a872a8d.png)
+![](https://files.mdnice.com/user/25329/51e577f9-8fcc-4a1b-811c-2e6dd93d5570.png)
 
 相对单接口，串联接口的测试特殊点在于 如果中间某个环节的接口测试失败了，后续的接口就不需要继续测试。故目前在 JMeter 中摸索出了两种方式，在上图的方式中，模块名和场景名都在线程组名称中给出且使用`|`分隔（两边可以有空格已做处理)，线程组勾选`停止线程`配置，注意不是停止测试！
 另一种方式在 jmx 示例文件中有注释说明，可以下载测试尝试下，个人推荐前者。
