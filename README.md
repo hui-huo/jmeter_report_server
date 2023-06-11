@@ -10,7 +10,9 @@ JMeter 是测试工作中常用的一款工具，除了压测还可以用来做�
 ### 技术栈
 
 前端 React + Antd | 后端 Django REST framework | Python 3.8+
-![](https://files.mdnice.com/user/25329/8ff683b1-4e1f-4a52-b131-24b8564d6d57.png)
+
+<img src="https://files.mdnice.com/user/25329/8ff683b1-4e1f-4a52-b131-24b8564d6d57.png" alt="_huihuo" width="500" height="350" />
+
 
 ## 📌 安装配置
 
