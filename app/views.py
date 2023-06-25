@@ -1,11 +1,11 @@
 # Create your views here.
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.utils import timezone
 from rest_framework import views
 from common.response import Response
 
 from app.models import TestSummary, TestCase
-from app.serializer import TestSummarySerializer, TestCaseSerializer, SaveReportSerializer
+from app.serializer import TestSummarySerializer, TestCaseSerializer, SaveReportSerializer, ModuleCountSerializer
 from app.validator import ChartDataSerializer, SummaryFilterSerializer, LatestBuildSerializer
 from common.utils import transition_time
 
@@ -42,10 +42,20 @@ class LatestBuildView(views.APIView):
                 q = q & Q(env__contains=env)
 
             summary_all = summary_all.filter(q).order_by('-id')
-            latest_summary = summary_all[0] if summary_all else summary_all
-            res_data = TestSummarySerializer(instance=latest_summary)
+            if summary_all.exists():
+                latest_summary = summary_all[0]
+                summary_data = TestSummarySerializer(instance=latest_summary)
+                res_data = summary_data.data
 
-            return Response(data=res_data.data)
+                latest_cases = TestCase.objects.filter(batch_no=latest_summary.batch_no)
+                module_count = latest_cases.filter(success=False).values('module_name').annotate(
+                    fail=Count('success'))
+                module_count_serializer = ModuleCountSerializer(instance=module_count, many=True)
+
+                res_data.update({'module_fail': module_count_serializer.data})
+                return Response(data=res_data)
+            else:
+                return Response(data={'message': '暂无构建信息'})
         else:
             return Response(data=req.errors)
 

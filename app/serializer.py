@@ -112,3 +112,8 @@ class SaveReportSerializer(serializers.Serializer):
     def to_representation(self, instance):
         data = model_to_dict(instance)
         return data
+
+
+class ModuleCountSerializer(serializers.Serializer):
+    name = serializers.CharField(source='module_name')
+    fail = serializers.IntegerField()
