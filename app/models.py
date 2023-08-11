@@ -14,7 +14,7 @@ class TestSummary(models.Model):
     total = models.IntegerField(verbose_name="用例数")
     success = models.IntegerField(verbose_name="成功数")
     fail = models.IntegerField(verbose_name="失败数")
-    pass_rate = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="通过率")
+    pass_rate = models.DecimalField(max_digits=6, decimal_places=4, verbose_name="通过率")
     duration = models.IntegerField(verbose_name="持续时间")
     result = models.BooleanField(verbose_name="测试结果")
     start_time = models.BigIntegerField(verbose_name="测试开始时间")
